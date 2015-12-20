@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 Produced by: Sukanya Srichandra
 Last Update: December 20, 2015
@@ -11,52 +6,75 @@ Last Update: December 20, 2015
 ## Loading and preprocessing the data:
 
 Step 1: Unpackaging the ZIP and storing into the data object  
-```{r}
+
+```r
 temp<-"activity.zip"
 data<-read.csv(unz(temp,"activity.csv"))
 ```
 
 Step 2: Load plyr package, and summarize data by date into q1_data object. NAs are omitted!
 
-```{r}
+
+```r
 library("plyr")
 q1_data <- na.omit(ddply(data,"date",summarize,Steps_per_day=sum(steps)))
 ```
 
 Step 3: Create the Histogram plot,  - Steps per Day
-```{r}
+
+```r
 hist(q1_data$Steps_per_day,main="Histogram of Steps Per Day")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
 
 ## What is mean total number of steps taken per day?
-```{r}
-mean(q1_data$Steps_per_day)
 
+```r
+mean(q1_data$Steps_per_day)
+```
+
+```
+## [1] 10766.19
 ```
 
 ##What is the median total number of steps taken per day?
-```{r}
+
+```r
 median(q1_data$Steps_per_day)
+```
+
+```
+## [1] 10765
 ```
 
 
 ## What is the average daily activity pattern?
 
 Step 1: Set data summary as Q2_data, and compute the average per interval into AvgSteps data object.
-```{r}
+
+```r
 q2_data<-na.omit(data)
 q2_data_avgsteps<-ddply(q2_data,"interval",summarize,Avg_steps=mean(steps))
 ```
 
 Step 2: Plot line chart
-```{r}
+
+```r
 plot(q2_data_avgsteps$interval,q2_data_avgsteps$Avg_steps,type="l")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+
 Step 3: Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
-```{r}
+
+```r
 q2_data_avgsteps[which.max(q2_data_avgsteps$Avg_steps),1]
+```
+
+```
+## [1] 835
 ```
 
 
@@ -64,14 +82,20 @@ q2_data_avgsteps[which.max(q2_data_avgsteps$Avg_steps),1]
 
 Step1: Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
-```{r}
+
+```r
 sum(is.na(data$steps))
+```
+
+```
+## [1] 2304
 ```
 
 Step 2: Using the mean for that 5-minute interval, create a new dataset that is equal to the original dataset  
 but with the missing data filled in.
 
-```{r}
+
+```r
         clean_data<-data
         
         navalues<-is.na(clean_data$steps)
@@ -85,12 +109,17 @@ Step 3: Make a new histogram of the total number of steps taken each day and Cal
 number of steps taken per day. Do these values differ from the estimates from the first part of the assignment?   
 What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
-```{r}
+
+```r
 q3_data <- ddply(clean_data,"date",summarize,Steps_per_day=sum(steps))
 
 #Create the Histogram plot,  - Steps per Day
 hist(q3_data$Steps_per_day,main="Histogram of Steps Per Day")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
+
+```r
 #Calculate the mean and media of the data
 q3_mean<-mean(q3_data$Steps_per_day)
 
@@ -100,9 +129,14 @@ q3_median<-median(q3_data$Steps_per_day)
 print("cleaned data, has same median and mean value")
 ```
 
+```
+## [1] "cleaned data, has same median and mean value"
+```
+
 ## Are there differences in activity patterns between weekdays and weekends?
 Step 1: Add new columns to delineate Weekends and Weekdays
-```{r}
+
+```r
         #Create a new factor variable in the dataset with two levels 
         #- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
@@ -112,13 +146,15 @@ Step 1: Add new columns to delineate Weekends and Weekdays
 ```
 
 Step 2: Create subsetted data objects
-```{r}
+
+```r
 q4_weekday<-ddply(clean_data[which(clean_data$Type=="Weekday"),],"interval",summarize,Avg_steps=mean(steps))
 q4_weekend<-ddply(clean_data[which(clean_data$Type=="Weekend"),],"interval",summarize,Avg_steps=mean(steps))
 ```
 
 Step 3: Create the panel plots, for the two subsets of data
-```{r}
+
+```r
         #Create Panel - 2 rows and 1 column
         par(mfrow = c(2, 1))
 
@@ -129,3 +165,5 @@ Step 3: Create the panel plots, for the two subsets of data
         plot(q4_weekday$interval,q4_weekday$Avg_steps,type="l",main="Weekday")
         plot(q4_weekend$interval,q4_weekend$Avg_steps,type="l",main="Weekend")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
