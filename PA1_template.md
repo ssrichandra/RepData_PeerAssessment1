@@ -120,17 +120,31 @@ hist(q3_data$Steps_per_day,main="Histogram of Steps Per Day")
 ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
 ```r
-#Calculate the mean and media of the data
-q3_mean<-mean(q3_data$Steps_per_day)
+#Calculate the mean 
+mean(q3_data$Steps_per_day)
+```
 
-q3_median<-median(q3_data$Steps_per_day)
+```
+## [1] 10766.19
+```
 
+```r
+#Calculate the median
+median(q3_data$Steps_per_day)
+```
+
+```
+## [1] 10766.19
+```
+
+
+```r
 #What is the impact of imputing missing data on the estimates of the total daily number of steps?
-print("cleaned data, has same median and mean value")
+print("cleaned data, has same median and mean value now, compared to differing values in the original dataset")
 ```
 
 ```
-## [1] "cleaned data, has same median and mean value"
+## [1] "cleaned data, has same median and mean value now, compared to differing values in the original dataset"
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -166,4 +180,4 @@ Step 3: Create the panel plots, for the two subsets of data
         plot(q4_weekend$interval,q4_weekend$Avg_steps,type="l",main="Weekend")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-15-1.png) 

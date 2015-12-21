@@ -91,13 +91,16 @@ q3_data <- ddply(clean_data,"date",summarize,Steps_per_day=sum(steps))
 #Create the Histogram plot,  - Steps per Day
 hist(q3_data$Steps_per_day,main="Histogram of Steps Per Day")
 
-#Calculate the mean and media of the data
-q3_mean<-mean(q3_data$Steps_per_day)
+#Calculate the mean 
+mean(q3_data$Steps_per_day)
 
-q3_median<-median(q3_data$Steps_per_day)
+#Calculate the median
+median(q3_data$Steps_per_day)
+```
 
+```{r}
 #What is the impact of imputing missing data on the estimates of the total daily number of steps?
-print("cleaned data, has same median and mean value")
+print("cleaned data, has same median and mean value now, compared to differing values in the original dataset")
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
